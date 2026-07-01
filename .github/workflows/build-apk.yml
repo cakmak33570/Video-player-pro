@@ -1,0 +1,29 @@
+name: Build APK
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: android-actions/setup-android@v2
+        with:
+          api-levels: '34'
+          build-tools-version: '34.0.0'
+      - run: npm ci
+      - run: npm run build
+      - run: npx cap sync android
+      - run: cd android && chmod +x gradlew && ./gradlew assembleRelease
+      - uses: actions/upload-artifact@v3
+        with:
+          name: apk
+          path: android/app/build/outputs/apk/release/app-release.apk
