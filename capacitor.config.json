@@ -1,0 +1,16 @@
+{
+  "appId": "com.videoplayer.secure",
+  "appName": "Video Oynatıcı Pro",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "server": {
+    "url": "http://localhost:8100",
+    "cleartext": false,
+    "allowNavigation": []
+  }
+}
